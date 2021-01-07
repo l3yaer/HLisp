@@ -34,6 +34,9 @@ public:
 		MemObj obj;
 		obj.addr = (intptr_t) mem;
 		add(obj);
+#if DEBUG_MEM
+		std::cout << "obj alloc: " << obj.addr << std::endl;
+#endif
 		return obj;
 	}
 
@@ -42,6 +45,11 @@ public:
 		remove(obj);
 		if(peek(obj) == 0 && obj.ptr != nullptr)
 			free(obj.ptr);
+
+#if DEBUG_MEM
+		if(peek(obj) == 0 && obj.ptr != nullptr)
+			std::cout << "obj freed: " << obj.addr << std::endl;
+#endif
 	}
 
 	void add(MemObj obj)
@@ -111,10 +119,6 @@ String create_string(const std::string &string)
 void destroy_string(String *string)
 {
 	object_manager.free_mem(string->mem);
-#if DEBUG_MEM
-	if(object_manager.peek(string->mem) == 0 && string->mem.addr)
-		std::cout << "obj freed: " << string->mem.addr << std::endl;
-#endif
 	string->size = 0;
 	string->value = nullptr;
 }
@@ -152,10 +156,6 @@ struct Array
 void destroy_array(Array *array)
 {
 	object_manager.free_mem(array->mem);
-#if DEBUG_MEM
-	if(object_manager.peek(array->mem) == 0 && array->mem.addr)
-		std::cout << "obj freed: " << array->mem.addr << std::endl;
-#endif
 	array->content = nullptr;
 	array->size = 0;
 	array->capacity = 0;
@@ -240,7 +240,7 @@ private:
 	std::string print_list() const
 	{
 		std::string s("(");
-		for(int i = 0; i < list.size; ++i)
+		for(size_t i = 0; i < list.size; ++i)
 		{
 			s += list.content[i].string_value();
 			if(i < list.size - 1)
@@ -403,7 +403,7 @@ Value eval(Value x, Env *env);
 Value fn_add(const Array &val, Env *env)
 {
 	double acc = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		acc += val.content[i].number_value();
 	return Value(acc);
 }
@@ -411,7 +411,7 @@ Value fn_add(const Array &val, Env *env)
 Value fn_sub(const Array &val, Env *env)
 {
 	double acc = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		acc -= val.content[i].number_value();
 	return Value(acc);
 }
@@ -419,7 +419,7 @@ Value fn_sub(const Array &val, Env *env)
 Value fn_mul(const Array &val, Env *env)
 {
 	double acc = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		acc *= val.content[i].number_value();
 	return Value(acc);
 }
@@ -427,7 +427,7 @@ Value fn_mul(const Array &val, Env *env)
 Value fn_div(const Array &val, Env *env)
 {
 	double acc = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		acc /= val.content[i].number_value();
 	return Value(acc);
 }
@@ -435,7 +435,7 @@ Value fn_div(const Array &val, Env *env)
 Value fn_greater(const Array &val, Env *env)
 {
 	double n = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		if(n <= val.content[i].number_value())
 			return false_symbol;
 	return true_symbol;
@@ -444,7 +444,7 @@ Value fn_greater(const Array &val, Env *env)
 Value fn_less(const Array &val, Env *env)
 {
 	double n = val.content[0].number_value();
-	for(int i = 1; i < val.size; ++i)
+	for(size_t i = 1; i < val.size; ++i)
 		if(n >= val.content[i].number_value())
 			return false_symbol;
 	return true_symbol;
@@ -493,7 +493,7 @@ Value fn_cons(const Array &val, Env *env)
 	Value result = value_make_list({});
 	array_add(&result.list, array_get(&val, 0));
 	Value second = array_get(&val, 1);
-	for(int i = 0; i < second.list.size; ++i)
+	for(size_t i = 0; i < second.list.size; ++i)
 		array_add(&result.list, array_get(&second.list, i));
 	return result;;
 }
@@ -503,7 +503,7 @@ Value fn_append(const Array &val, Env *env)
 	Value first = array_get(&val, 0);
 	Value second = array_get(&val, 1);
 	Value result(first.list);
-	for(int i = 0; i < second.list.size; ++i)
+	for(size_t i = 0; i < second.list.size; ++i)
 		array_add(&result.list, array_get(&second.list, i));
 	return result;;
 }
