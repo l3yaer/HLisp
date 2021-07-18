@@ -1,6 +1,6 @@
-CS=lisp.c
+CS=lisp.c types.c reader.c lexxer.c parser.c printer.c
 CC=gcc
-CFLAGS=-Wall -ggdb -Wextra
+CFLAGS=-Wall -Wextra -Werror -ggdb -pedantic
 
 .PHONY: all
 	all: HLisp
