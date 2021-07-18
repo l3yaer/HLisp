@@ -1,6 +1,6 @@
-CS=lisp.cpp
-CC=g++
-CFLAGS=-Wall -ggdb -std=c++0x
+CS=lisp.c
+CC=gcc
+CFLAGS=-Wall -ggdb -Wextra
 
 .PHONY: all
 	all: HLisp
