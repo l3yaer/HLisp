@@ -15,12 +15,13 @@ static void print_string(hlisp_atom *atom)
 
 static void print_list(hlisp_atom *atom)
 {
-    printf("( ");
+    printf("(");
     hlisp_list *node = atom->value.list;
     while(!NILP(node->value))
     {
         print_atom(&node->value);
-        printf(" ");
+        if(!NILP(node->next->value))
+            printf(" ");
         node = node->next;
     }
     printf(")");
@@ -83,4 +84,5 @@ static void print_atom(hlisp_atom *atom)
 void pr_str(hlisp_atom *atom)
 {
     print_atom(atom);
+    printf("\n");
 }

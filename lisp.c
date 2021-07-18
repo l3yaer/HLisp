@@ -25,7 +25,7 @@ void print(hlisp_atom value)
 
 void rep(char *buffer)
 {
-	print(read(eval(buffer)));
+	print(eval(read(buffer)));
 }
 
 int main(int argc, char **argv)
