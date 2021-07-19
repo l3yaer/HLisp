@@ -1,4 +1,4 @@
-CS=lisp.c types.c reader.c lexxer.c parser.c printer.c
+CS=lisp.c types.c reader.c lexxer.c parser.c printer.c ht.c
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -ggdb -pedantic
 

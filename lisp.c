@@ -20,7 +20,7 @@ hlisp_atom eval(hlisp_atom value)
 void print(hlisp_atom value)
 {
 	pr_str(&value);
-	free_atom(&value);
+	atom_free(&value);
 }
 
 void rep(char *buffer)
@@ -30,17 +30,14 @@ void rep(char *buffer)
 
 int main(int argc, char **argv)
 {
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 
-	for(;;)
-	{
+	for (;;) {
 		char buffer[READ_BUFFER_SIZE];
 		printf("user> ");
-		fgets(buffer, READ_BUFFER_SIZE, stdin);
-
-		if(buffer[0] == EOF)
-			break;
+		if (fgets(buffer, READ_BUFFER_SIZE, stdin) == NULL)
+			return 0;
 
 		rep(buffer);
 	}

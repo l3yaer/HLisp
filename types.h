@@ -9,33 +9,31 @@ struct _hlisp_pair;
 struct _hlisp_list;
 
 typedef enum {
-    HLISP_ATOM_NIL,
-    HLISP_ATOM_BOOL,
-    HLISP_ATOM_SYMBOL,
-    HLISP_ATOM_INTERGER,
-    HLISP_ATOM_FLOAT,
-    HLISP_ATOM_LIST,
-    HLISP_ATOM_STRING,
+	HLISP_ATOM_NIL,
+	HLISP_ATOM_BOOL,
+	HLISP_ATOM_SYMBOL,
+	HLISP_ATOM_INTERGER,
+	HLISP_ATOM_FLOAT,
+	HLISP_ATOM_LIST,
+	HLISP_ATOM_STRING,
 } hlisp_atom_type_t;
 
-typedef struct _hlisp_atom
-{
-    hlisp_atom_type_t type;
+typedef struct _hlisp_atom {
+	hlisp_atom_type_t type;
 
-    union {
-        char *symbol;
-        long integer;
-        double real;
-        char *string;
-        unsigned char boolean;
-        struct _hlisp_list *list;
-    } value;
+	union {
+		char *symbol;
+		long integer;
+		double real;
+		char *string;
+		unsigned char boolean;
+		struct _hlisp_list *list;
+	} value;
 } hlisp_atom;
 
-typedef struct _hlisp_list
-{
-    hlisp_atom value;
-    struct _hlisp_list *next;
+typedef struct _hlisp_list {
+	hlisp_atom value;
+	struct _hlisp_list *next;
 } hlisp_list;
 
 #define NILP(x) ((x).type == HLISP_ATOM_NIL)
@@ -43,7 +41,7 @@ typedef struct _hlisp_list
 hlisp_list *make_list(const hlisp_atom value);
 void list_append(hlisp_list *list, const hlisp_atom value);
 
-void free_atom(hlisp_atom *atom);
+void atom_free(hlisp_atom *atom);
 
 extern const hlisp_atom nil;
 
