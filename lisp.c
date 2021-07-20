@@ -2,25 +2,26 @@
 #include <stdlib.h>
 #include "reader.h"
 #include "printer.h"
+#include "types.h"
 #include <string.h>
 
 #define READ_BUFFER_SIZE 4098
 #define TOKEN_BUFFER_SIZE 512
 
-hlisp_atom read(char *buffer)
+hlisp_atom_t *read(char *buffer)
 {
 	return read_str(buffer, READ_BUFFER_SIZE, TOKEN_BUFFER_SIZE);
 }
 
-hlisp_atom eval(hlisp_atom value)
+hlisp_atom_t *eval(hlisp_atom_t *value)
 {
 	return value;
 }
 
-void print(hlisp_atom value)
+void print(hlisp_atom_t *value)
 {
-	pr_str(&value);
-	atom_free(&value);
+	pr_str(value);
+	atom_free(value);
 }
 
 void rep(char *buffer)

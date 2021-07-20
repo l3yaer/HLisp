@@ -4,9 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-struct _hlisp_pair;
-
-struct _hlisp_list;
+struct hlisp_list;
 
 typedef enum {
 	HLISP_ATOM_NIL,
@@ -18,7 +16,7 @@ typedef enum {
 	HLISP_ATOM_STRING,
 } hlisp_atom_type_t;
 
-typedef struct _hlisp_atom {
+typedef struct hlisp_atom {
 	hlisp_atom_type_t type;
 
 	union {
@@ -27,22 +25,28 @@ typedef struct _hlisp_atom {
 		double real;
 		char *string;
 		unsigned char boolean;
-		struct _hlisp_list *list;
+		struct hlisp_list *list;
 	} value;
-} hlisp_atom;
+} hlisp_atom_t;
 
-typedef struct _hlisp_list {
-	hlisp_atom value;
-	struct _hlisp_list *next;
-} hlisp_list;
+typedef struct hlisp_list {
+	struct hlisp_atom *value;
+	struct hlisp_list *next;
+} hlisp_list_t;
 
-#define NILP(x) ((x).type == HLISP_ATOM_NIL)
+#define NILP(x) ((x)->type == HLISP_ATOM_NIL)
 
-hlisp_list *make_list(const hlisp_atom value);
-void list_append(hlisp_list *list, const hlisp_atom value);
+struct hlisp_list *make_list(struct hlisp_atom *value);
+void list_append(struct hlisp_list *list,struct hlisp_atom *value);
 
-void atom_free(hlisp_atom *atom);
+struct hlisp_atom *make_atom_symbol(const char *, size_t);
+struct hlisp_atom *make_atom_integer(const long);
+struct hlisp_atom *make_atom_float(const double);
+struct hlisp_atom *make_atom_string(const char *, size_t);
+struct hlisp_atom *make_atom_bool(const unsigned char);
+struct hlisp_atom *make_atom_list();
+struct hlisp_atom *make_atom_nil();
 
-extern const hlisp_atom nil;
+void atom_free(struct hlisp_atom *atom);
 
 #endif //_TYPES_H_

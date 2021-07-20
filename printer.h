@@ -1,8 +1,8 @@
 #ifndef _PRINTER_H_
 #define _PRINTER_H_
 
-#include "types.h"
+struct hlisp_atom;
 
-void pr_str(hlisp_atom *atom);
+void pr_str(struct hlisp_atom *atom);
 
 #endif //_PRINTER_H_
