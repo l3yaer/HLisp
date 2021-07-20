@@ -11,7 +11,8 @@ typedef struct env {
     struct env_list *children;
 } env_t;
 
-LL_IMPL(env_list, struct env)
+LL_IMPL_LIST(env_list, struct env)
+LL_IMPL_FN(env_list, struct env)
 
 void add_child(env_t *parent, env_t *child)
 {

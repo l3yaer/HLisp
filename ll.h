@@ -9,19 +9,22 @@ struct name *name##_make(type *value);\
 struct name *name##_append(struct name *list, type *value);\
 void name##_free(struct name *list);\
 void name##_remove(struct name*list, type *value);\
-void name##_print(struct name *list, const char *format);\
+void name##_print(struct name *list, const char *format);
 
-#define LL_IMPL(name,type)\
+#define LL_IMPL_LIST(name,type)\
 typedef struct name {\
     type *value;\
     struct name *next;\
 } name;\
-\
+
+#define LL_IMPL_FN(name,type)\
 name *name##_make(type *value)\
 {\
+	if(value == NULL)\
+		return NULL;\
     name *list = (name *) malloc(sizeof(name));\
     list->value = (type *) malloc(sizeof(type));\
-    memcpy(list->value, value, sizeof(type));   \
+    memcpy(list->value, value, sizeof(type));\
     return list;\
 }\
 \

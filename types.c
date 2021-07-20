@@ -4,6 +4,8 @@
 #include <string.h>
 #include <ctype.h>
 
+LL_IMPL_FN(hlisp_list, struct hlisp_atom)
+
 void free_list(hlisp_atom_t *list);
 void free_symbol(hlisp_atom_t *symbol);
 void free_string(hlisp_atom_t *string);
@@ -63,7 +65,7 @@ hlisp_atom_t *make_atom_bool(const unsigned char value)
 hlisp_atom_t *make_atom_list()
 {
 	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
-	a->value.list = make_list(NULL);
+	a->value.list = hlisp_list_make(NULL);
 	a->type = HLISP_ATOM_LIST;
 	return a;
 }
@@ -75,30 +77,9 @@ hlisp_atom_t *make_atom_nil()
 	return a;
 }
 
-hlisp_list_t *make_list(hlisp_atom_t *value)
-{
-	hlisp_list_t *l = (hlisp_list_t *)malloc(sizeof(hlisp_list_t));
-	if(value == NULL)
-		l->value = make_atom_nil();
-	else
-		l->value = value;
-	l->next = NULL;
-	return l;
-}
-
-void list_append(hlisp_list_t *list, hlisp_atom_t *value)
-{
-	hlisp_list_t *node = list;
-	while (!NILP(node->value))
-		node = node->next;
-
-	node->value = value;
-	node->next = make_list(NULL);
-}
-
 void free_list(hlisp_atom_t *list)
 {
-	hlisp_list_t *node = list->value.list;
+	struct hlisp_list *node = list->value.list;
 	while (node != NULL) {
 		atom_free(node->value);
 		node = node->next;
@@ -119,6 +100,8 @@ void free_string(hlisp_atom_t *string)
 
 void atom_free(hlisp_atom_t *atom)
 {
+	if(atom == NULL)
+		return;
 	switch (atom->type) {
 	case HLISP_ATOM_NIL:
 	case HLISP_ATOM_BOOL:

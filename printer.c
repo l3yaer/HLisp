@@ -17,10 +17,10 @@ static void print_string(struct hlisp_atom *atom)
 static void print_list(struct hlisp_atom *atom)
 {
 	printf("(");
-	hlisp_list_t *node = atom->value.list;
-	while (!NILP(node->value)) {
+	struct hlisp_list *node = atom->value.list;
+	while (node != NULL) {
 		print_atom(node->value);
-		if (!NILP(node->next->value))
+		if (node->next != NULL)
 			printf(" ");
 		node = node->next;
 	}

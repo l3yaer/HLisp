@@ -227,7 +227,7 @@ static hlisp_atom_t *read_list(hlisp_reader_t *reader, const char *str)
 {
 	hlisp_atom_t *atom = make_atom_list();
 	while (reader->pos < reader->tok_count)
-		list_append(atom->value.list, read_atom(reader, str));
+		atom->value.list = hlisp_list_append(atom->value.list, read_atom(reader, str));
 	return atom;
 }
 
