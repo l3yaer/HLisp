@@ -12,6 +12,9 @@ void *ht_get(struct ht *ht, const char *key);
 
 #ifdef HT_DEBUG
 void ht_dump(const struct ht *ht);
+#define HT_PRINT(x) ht_dump(x);
+#else
+#define HT_PRINT(x)
 #endif
 
 #endif //_HT_H_

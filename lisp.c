@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "reader.h"
 #include "printer.h"
+#include "ht.h"
+#include <string.h>
 
 #define READ_BUFFER_SIZE 4098
 #define TOKEN_BUFFER_SIZE 512

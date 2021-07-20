@@ -1,6 +1,5 @@
 #include "ht.h"
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,7 +27,7 @@ unsigned long hash(const char *key)
 	while ((c = *key++))
 		hash = ((hash << 5) + hash) + c;
 
-	return hash;
+	return hash % TABLE_SIZE;
 }
 
 ht_t *ht_make()
@@ -117,20 +116,39 @@ void *ht_get(ht_t *ht, const char *key)
 }
 
 #ifdef HT_DEBUG
+#include <ctype.h>
+#include <stdio.h>
+
+void ht_dump_elem(const ht_elem_t *elem)
+{
+    printf("\t%s[%zu]\n", elem->key, elem->val_size);
+    char *val = elem->val;
+    for (size_t j = 0; j < elem->val_size;) {
+        printf("\t\t%07zu0 ", j/8);
+        char k = 0;
+        for (; j < elem->val_size && k < 8; ++j, ++k)
+            printf("%02X ", val[j]);
+        for (char l = k; l < 8; ++l)
+            printf("   ");
+        for (char l = k; l > 0; --l)
+            printf("%c",
+                   isprint(val[j - l]) == 0 ?
+                   '.' :
+                   val[j - l]);
+        printf("\n");
+    }
+}
+
 void ht_dump(const struct ht *ht)
 {
 	for (int i = 0; i < TABLE_SIZE; ++i) {
 		ht_elem_t *elem = ht->elems[i];
 		if (elem == NULL)
 			continue;
-
 		printf("slot[%d]\n", i);
+        ht_dump_elem(elem);
 		while (elem != NULL) {
-			printf("\t%s\n\t\t", elem->key);
-			char *val = elem->val;
-			for (size_t j = 0; j < elem->val_size; ++j)
-				printf("%02x", val[j]);
-			printf("\n");
+
 			elem = elem->next;
 		}
 		printf("\n");
