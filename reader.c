@@ -30,13 +30,13 @@ hlisp_tok *reader_peek(const hlisp_reader *reader)
 	return reader->tok + reader->pos - 1;
 }
 
-hlisp_reader read_str(const char *str, const size_t len,
+hlisp_atom read_str(const char *str, const size_t len,
 		      const unsigned int n_tok)
 {
 	hlisp_reader reader = reader_make(n_tok);
 	parse_tok(&reader, str, len);
 	read_form(&reader, str);
-	return reader;
+	return reader.root;
 }
 
 void reader_free(hlisp_reader *reader)

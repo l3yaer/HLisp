@@ -45,7 +45,7 @@ hlisp_tok *reader_peek(const hlisp_reader *reader);
 hlisp_tok *reader_next(hlisp_reader *reader);
 void reader_free(hlisp_reader *reader);
 
-hlisp_reader read_str(const char *str, const size_t len,
+hlisp_atom read_str(const char *str, const size_t len,
 		      const unsigned int n_tok);
 hlisp_err_t parse_tok(hlisp_reader *reader, const char *str, size_t len);
 hlisp_atom *read_form(hlisp_reader *reader, const char *str);

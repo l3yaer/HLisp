@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "reader.h"
 #include "printer.h"
-#include "ht.h"
 #include <string.h>
 
 #define READ_BUFFER_SIZE 4098
@@ -10,8 +9,7 @@
 
 hlisp_atom read(char *buffer)
 {
-	hlisp_reader r = read_str(buffer, READ_BUFFER_SIZE, TOKEN_BUFFER_SIZE);
-	return r.root;
+	return read_str(buffer, READ_BUFFER_SIZE, TOKEN_BUFFER_SIZE);
 }
 
 hlisp_atom eval(hlisp_atom value)

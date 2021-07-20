@@ -1,4 +1,4 @@
-CS=lisp.c types.c reader.c lexxer.c parser.c printer.c ht.c
+CS=lisp.c types.c reader.c lexxer.c parser.c printer.c ht.c env.c
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -ggdb -pedantic
 DFLAGS=-DHT_DEBUG -DDEBUG
