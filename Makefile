@@ -1,4 +1,4 @@
-CS=lisp.c types.c reader.c printer.c htree.c env.c token.c parser.c
+CS=lisp.c types.c reader.c printer.c htree.c env.c token.c parser.c natfn.c
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -ggdb -pedantic
 DFLAGS=-DHTREE_DEBUG -DDEBUG

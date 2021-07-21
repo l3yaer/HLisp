@@ -9,6 +9,8 @@ struct hlisp_atom;
 
 LIST_DECL(hlisp_list, struct hlisp_atom)
 
+typedef struct hlisp_atom * (*c_fn)(struct hlisp_list*);
+
 struct hlisp_list;
 
 typedef enum {
@@ -19,6 +21,7 @@ typedef enum {
 	HLISP_ATOM_FLOAT,
 	HLISP_ATOM_LIST,
 	HLISP_ATOM_STRING,
+	HLISP_ATOM_NATIVE_FN
 } hlisp_atom_type_t;
 
 typedef struct hlisp_atom {
@@ -31,6 +34,7 @@ typedef struct hlisp_atom {
 		char *string;
 		unsigned char boolean;
 		struct hlisp_list *list;
+		c_fn nat_fn;
 	} value;
 } hlisp_atom_t;
 
@@ -45,6 +49,7 @@ struct hlisp_atom *make_atom_string(const char *, size_t);
 struct hlisp_atom *make_atom_bool(const unsigned char);
 struct hlisp_atom *make_atom_list();
 struct hlisp_atom *make_atom_nil();
+struct hlisp_atom *make_atom_fn_C(c_fn);
 
 void atom_free(struct hlisp_atom *atom);
 

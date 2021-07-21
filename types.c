@@ -76,6 +76,14 @@ hlisp_atom_t *make_atom_nil()
 	return a;
 }
 
+hlisp_atom_t *make_atom_fn_C(c_fn fn)
+{
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
+	a->type = HLISP_ATOM_NATIVE_FN;
+	a->value.nat_fn = fn;
+	return a;
+}
+
 void free_list(hlisp_atom_t *list)
 {
 	struct hlisp_list *node = list->value.list;
@@ -83,8 +91,7 @@ void free_list(hlisp_atom_t *list)
 		atom_free(node->value);
 		node = node->next;
 	}
-
-	free(list->value.list);
+	hlisp_list_free(list->value.list);
 }
 
 void free_symbol(hlisp_atom_t *symbol)
@@ -106,6 +113,7 @@ void atom_free(hlisp_atom_t *atom)
 	case HLISP_ATOM_BOOL:
 	case HLISP_ATOM_INTERGER:
 	case HLISP_ATOM_FLOAT:
+	case HLISP_ATOM_NATIVE_FN:
 		break;
 	case HLISP_ATOM_LIST:
 		free_list(atom);
