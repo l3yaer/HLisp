@@ -3,11 +3,11 @@
 
 #include <stddef.h>
 #include <stdlib.h>
-#include "ll.h"
+#include "llist.h"
 
 struct hlisp_atom;
 
-LL_DECL(hlisp_list, struct hlisp_atom)
+LIST_DECL(hlisp_list, struct hlisp_atom)
 
 struct hlisp_list;
 
@@ -34,7 +34,7 @@ typedef struct hlisp_atom {
 	} value;
 } hlisp_atom_t;
 
-LL_IMPL_LIST(hlisp_list, struct hlisp_atom)
+LIST_IMPL_LIST(hlisp_list, struct hlisp_atom)
 
 #define NILP(x) ((x) == NULL || (x)->type == HLISP_ATOM_NIL)
 

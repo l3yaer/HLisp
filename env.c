@@ -1,18 +1,18 @@
 #include "env.h"
 #include <stdlib.h>
-#include "ll.h"
-#include "ht.h"
+#include "llist.h"
+#include "htree.h"
 
 struct env_list;
 
 typedef struct env {
 	struct env *parent;
-	struct ht *sym_tbl;
+	struct htree *sym_tbl;
 	struct env_list *children;
 } env_t;
 
-LL_IMPL_LIST(env_list, struct env)
-LL_IMPL_FN(env_list, struct env)
+LIST_IMPL_LIST(env_list, struct env)
+LIST_IMPL_FN(env_list, struct env)
 
 void add_child(env_t *parent, env_t *child)
 {
@@ -23,7 +23,7 @@ env_t *env_make(env_t *parent)
 {
 	env_t *env = (env_t *)malloc(sizeof(env_t));
 	env->parent = parent;
-	env->sym_tbl = ht_make();
+	env->sym_tbl = htree_make();
 	env->children = NULL;
 	if (parent != NULL)
 		add_child(parent, env);
@@ -33,7 +33,7 @@ env_t *env_make(env_t *parent)
 
 void env_free_ht(struct env *env)
 {
-	ht_free(env->sym_tbl);
+	htree_free(env->sym_tbl);
 	env_list *child = env->children;
 	while (child != NULL) {
 		env_free_ht(child->value);

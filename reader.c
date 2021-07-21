@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-#include "ht.h"
+#include "htree.h"
 #include "token.h"
 #include "types.h"
 #include "parser.h"

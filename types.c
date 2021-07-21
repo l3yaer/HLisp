@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-LL_IMPL_FN(hlisp_list, struct hlisp_atom)
+LIST_IMPL_FN(hlisp_list, struct hlisp_atom)
 
 void free_list(hlisp_atom_t *list);
 void free_symbol(hlisp_atom_t *symbol);

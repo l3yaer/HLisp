@@ -1,9 +1,9 @@
-#ifndef _LL_H_
-#define _LL_H_
+#ifndef _LLIST_H_
+#define _LLIST_H_
 
 #include <stdio.h>
 #include <string.h>
-#define LL_DECL(name, type)                                                    \
+#define LIST_DECL(name, type)                                                    \
 	struct name;                                                           \
 	struct name *name##_make(type *value);                                 \
 	struct name *name##_append(struct name *list, type *value);            \
@@ -11,13 +11,13 @@
 	void name##_remove(struct name *list, type *value);                    \
 	void name##_print(struct name *list, const char *format);
 
-#define LL_IMPL_LIST(name, type)                                               \
+#define LIST_IMPL_LIST(name, type)                                               \
 	typedef struct name {                                                  \
 		type *value;                                                   \
 		struct name *next;                                             \
 	} name;
 
-#define LL_IMPL_FN(name, type)                                                 \
+#define LIST_IMPL_FN(name, type)                                                 \
 	name *name##_make(type *value)                                         \
 	{                                                                      \
 		if (value == NULL)                                             \
@@ -80,4 +80,4 @@
 		printf("\n");                                                  \
 	}
 
-#endif //_LL_H_
+#endif //_LLIST_H_
