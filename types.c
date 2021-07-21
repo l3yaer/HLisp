@@ -10,17 +10,16 @@ void free_list(hlisp_atom_t *list);
 void free_symbol(hlisp_atom_t *symbol);
 void free_string(hlisp_atom_t *string);
 
-
 static void to_upper_str(char *str, size_t n)
 {
 	for (size_t i = 0; i < n; ++i)
 		str[i] = toupper(str[i]);
 }
 
-hlisp_atom_t *make_atom_symbol(const char * symbol, size_t len)
+hlisp_atom_t *make_atom_symbol(const char *symbol, size_t len)
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
-	a->value.symbol = (char *) malloc(len + 1);
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
+	a->value.symbol = (char *)malloc(len + 1);
 	memcpy(a->value.symbol, symbol, len);
 	a->value.symbol[len] = '\0';
 	to_upper_str(a->value.symbol, len);
@@ -30,7 +29,7 @@ hlisp_atom_t *make_atom_symbol(const char * symbol, size_t len)
 
 hlisp_atom_t *make_atom_integer(const long value)
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.integer = value;
 	a->type = HLISP_ATOM_INTERGER;
 	return a;
@@ -38,7 +37,7 @@ hlisp_atom_t *make_atom_integer(const long value)
 
 hlisp_atom_t *make_atom_float(const double value)
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.real = value;
 	a->type = HLISP_ATOM_FLOAT;
 	return a;
@@ -46,8 +45,8 @@ hlisp_atom_t *make_atom_float(const double value)
 
 hlisp_atom_t *make_atom_string(const char *string, size_t len)
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
-	a->value.string = (char *) malloc(len + 1);
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
+	a->value.string = (char *)malloc(len + 1);
 	memcpy(a->value.string, string, len);
 	a->value.string[len] = '\0';
 	a->type = HLISP_ATOM_STRING;
@@ -56,7 +55,7 @@ hlisp_atom_t *make_atom_string(const char *string, size_t len)
 
 hlisp_atom_t *make_atom_bool(const unsigned char value)
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.boolean = value;
 	a->type = HLISP_ATOM_BOOL;
 	return a;
@@ -64,7 +63,7 @@ hlisp_atom_t *make_atom_bool(const unsigned char value)
 
 hlisp_atom_t *make_atom_list()
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.list = hlisp_list_make(NULL);
 	a->type = HLISP_ATOM_LIST;
 	return a;
@@ -72,7 +71,7 @@ hlisp_atom_t *make_atom_list()
 
 hlisp_atom_t *make_atom_nil()
 {
-	hlisp_atom_t *a = (hlisp_atom_t *) malloc(sizeof(hlisp_atom_t));
+	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->type = HLISP_ATOM_NIL;
 	return a;
 }
@@ -100,7 +99,7 @@ void free_string(hlisp_atom_t *string)
 
 void atom_free(hlisp_atom_t *atom)
 {
-	if(atom == NULL)
+	if (atom == NULL)
 		return;
 	switch (atom->type) {
 	case HLISP_ATOM_NIL:

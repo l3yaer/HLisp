@@ -80,7 +80,6 @@ static void print_atom(struct hlisp_atom *atom)
 	}
 }
 
-
 void pr_str(struct hlisp_atom *atom)
 {
 	print_atom(atom);
