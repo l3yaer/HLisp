@@ -17,7 +17,7 @@ hlisp_atom_t *read(char *buffer)
 
 hlisp_atom_t *eval(hlisp_atom_t *value, struct env *env)
 {
-	(void) env;
+	(void)env;
 	return value;
 }
 

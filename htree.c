@@ -36,7 +36,7 @@ htree_t *htree_make()
 	htree->elems = malloc(sizeof(htree_elem_t) * TABLE_SIZE);
 
 	for (int i = 0; i < TABLE_SIZE; ++i)
-		htree->elems[0] = NULL;
+		htree->elems[i] = NULL;
 
 	return htree;
 }
@@ -48,6 +48,7 @@ void htree_free(htree_t *htree)
 		while (elem != NULL) {
 			htree_elem_t *next = elem->next;
 			free(elem->val);
+			free(elem->key);
 			free(elem);
 			elem = next;
 		}
@@ -59,16 +60,19 @@ void htree_free(htree_t *htree)
 htree_elem_t *htree_pair(const char *key, const void *val, size_t val_size)
 {
 	htree_elem_t *elem = (htree_elem_t *)malloc(sizeof(htree_elem_t));
-	elem->key = strdup(key);
+	elem->key = (char *)malloc(strlen(key) + 1);
+	strcpy(elem->key, key);
 	elem->val = malloc(val_size);
 #ifdef HTREE_DEBUG
 	elem->val_size = val_size;
 #endif
 	memcpy(elem->val, val, val_size);
+	elem->next = NULL;
 	return elem;
 }
 
-void htree_add(htree_t *htree, const char *key, const void *val, size_t val_size)
+void htree_add(htree_t *htree, const char *key, const void *val,
+	       size_t val_size)
 {
 	unsigned long slot = hash(key);
 	htree_elem_t *elem = htree->elems[slot];

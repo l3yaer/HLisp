@@ -12,5 +12,8 @@ HLisp:
 HLisp-debug:
 	$(CC) $(CFLAGS) $(DFLAGS) $(CS) -o HLisp
 
+HLisp-release:
+	$(CC) -O2 $(CS) -o HLisp
+
 clear:
 	rm HLisp

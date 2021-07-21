@@ -7,7 +7,8 @@ struct htree;
 
 struct htree *htree_make();
 void htree_free(struct htree *htree);
-void htree_add(struct htree *htree, const char *key, const void *val, size_t val_size);
+void htree_add(struct htree *htree, const char *key, const void *val,
+	       size_t val_size);
 void *htree_get(struct htree *htree, const char *key);
 
 #ifdef HTREE_DEBUG

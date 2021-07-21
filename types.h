@@ -9,19 +9,19 @@ struct hlisp_atom;
 
 LIST_DECL(hlisp_list, struct hlisp_atom)
 
-typedef struct hlisp_atom * (*c_fn)(struct hlisp_list*);
+typedef struct hlisp_atom *(*c_fn)(struct hlisp_list *);
 
 struct hlisp_list;
 
 typedef enum {
-	HLISP_ATOM_NIL,
-	HLISP_ATOM_BOOL,
-	HLISP_ATOM_SYMBOL,
-	HLISP_ATOM_INTERGER,
-	HLISP_ATOM_FLOAT,
-	HLISP_ATOM_LIST,
-	HLISP_ATOM_STRING,
-	HLISP_ATOM_NATIVE_FN
+	HLISP_ATOM_NIL = 0,
+	HLISP_ATOM_BOOL = 1,
+	HLISP_ATOM_SYMBOL = 2,
+	HLISP_ATOM_INTERGER = 3,
+	HLISP_ATOM_FLOAT = 4,
+	HLISP_ATOM_LIST = 5,
+	HLISP_ATOM_STRING = 6,
+	HLISP_ATOM_NATIVE_FN = 7
 } hlisp_atom_type_t;
 
 typedef struct hlisp_atom {

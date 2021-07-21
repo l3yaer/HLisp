@@ -53,26 +53,30 @@ void env_free(struct env *env)
 	free(env);
 }
 
-struct env *env_set(struct env *env, struct hlisp_atom *sym, struct hlisp_atom *val)
+struct env *env_set(struct env *env, struct hlisp_atom *sym,
+		    struct hlisp_atom *val)
 {
-	if(sym->type != HLISP_ATOM_SYMBOL)
+	if (sym->type != HLISP_ATOM_SYMBOL)
 		return env;
 
-	htree_add(env->sym_tbl, sym->value.symbol, val, sizeof(struct hlisp_atom));
+	htree_add(env->sym_tbl, sym->value.symbol, val,
+		  sizeof(struct hlisp_atom));
 	return env;
 }
 
-struct env *env_set_C(struct env *env, const char *sym, struct hlisp_atom *(*fn) (struct hlisp_list*))
+struct env *env_set_C(struct env *env, const char *sym,
+		      struct hlisp_atom *(*fn)(struct hlisp_list *))
 {
 	struct hlisp_atom *fna = make_atom_fn_C(fn);
 	htree_add(env->sym_tbl, sym, fna, sizeof(struct hlisp_atom));
+	free(fna);
 	return env;
 }
 
 struct hlisp_atom *env_get(const struct env *env, struct hlisp_atom *sym)
 {
-	if(sym->type != HLISP_ATOM_SYMBOL)
+	if (sym->type != HLISP_ATOM_SYMBOL)
 		return NULL;
 
-	return (struct hlisp_atom *) htree_get(env->sym_tbl, sym->value.symbol);
+	return (struct hlisp_atom *)htree_get(env->sym_tbl, sym->value.symbol);
 }

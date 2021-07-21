@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#define LIST_DECL(name, type)                                                    \
+#define LIST_DECL(name, type)                                                  \
 	struct name;                                                           \
 	struct name *name##_make(type *value);                                 \
 	struct name *name##_append(struct name *list, type *value);            \
@@ -11,13 +11,13 @@
 	void name##_remove(struct name *list, type *value);                    \
 	void name##_print(struct name *list, const char *format);
 
-#define LIST_IMPL_LIST(name, type)                                               \
+#define LIST_IMPL_LIST(name, type)                                             \
 	typedef struct name {                                                  \
 		type *value;                                                   \
 		struct name *next;                                             \
 	} name;
 
-#define LIST_IMPL_FN(name, type)                                                 \
+#define LIST_IMPL_FN(name, type)                                               \
 	name *name##_make(type *value)                                         \
 	{                                                                      \
 		if (value == NULL)                                             \
@@ -48,7 +48,8 @@
 		name *head;                                                    \
 		while (list != NULL) {                                         \
 			head = list;                                           \
-			free(head->value);                                     \
+			if (head->value != NULL)                               \
+				free(head->value);                             \
 			list = list->next;                                     \
 			free(head);                                            \
 		}                                                              \

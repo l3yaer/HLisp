@@ -20,9 +20,11 @@ static hlisp_atom_t *read_string(struct hlisp_reader *reader, const char *str)
 static hlisp_atom_t *read_list(struct hlisp_reader *reader, const char *str)
 {
 	hlisp_atom_t *atom = make_atom_list();
-	while (reader_pos(reader) < reader_max_pos(reader))
-		atom->value.list = hlisp_list_append(atom->value.list,
-						     read_atom(reader, str));
+	while (reader_pos(reader) < reader_max_pos(reader)) {
+		hlisp_atom_t *val = read_atom(reader, str);
+		atom->value.list = hlisp_list_append(atom->value.list, val);
+		free(val);
+	}
 	return atom;
 }
 

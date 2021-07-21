@@ -20,7 +20,7 @@ hlisp_atom_t *make_atom_symbol(const char *symbol, size_t len)
 {
 	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.symbol = (char *)malloc(len + 1);
-	memcpy(a->value.symbol, symbol, len);
+	strncpy(a->value.symbol, symbol, len);
 	a->value.symbol[len] = '\0';
 	to_upper_str(a->value.symbol, len);
 	a->type = HLISP_ATOM_SYMBOL;
@@ -47,7 +47,7 @@ hlisp_atom_t *make_atom_string(const char *string, size_t len)
 {
 	hlisp_atom_t *a = (hlisp_atom_t *)malloc(sizeof(hlisp_atom_t));
 	a->value.string = (char *)malloc(len + 1);
-	memcpy(a->value.string, string, len);
+	strncpy(a->value.string, string, len);
 	a->value.string[len] = '\0';
 	a->type = HLISP_ATOM_STRING;
 	return a;
@@ -89,9 +89,11 @@ void free_list(hlisp_atom_t *list)
 	struct hlisp_list *node = list->value.list;
 	while (node != NULL) {
 		atom_free(node->value);
+		node->value = NULL;
 		node = node->next;
 	}
 	hlisp_list_free(list->value.list);
+	list = NULL;
 }
 
 void free_symbol(hlisp_atom_t *symbol)
